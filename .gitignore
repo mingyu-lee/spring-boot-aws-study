@@ -1,0 +1,11 @@
+# Project exclude paths
+
+# idea
+.idea
+
+# Gradle
+/.gradle/
+gradlew.bat
+settings.gradle
+gradlew
+gradle/wrapper/gradle-wrapper.jar
