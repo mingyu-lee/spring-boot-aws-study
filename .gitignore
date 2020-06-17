@@ -5,7 +5,3 @@
 
 # Gradle
 /.gradle/
-gradlew.bat
-settings.gradle
-gradlew
-gradle/wrapper/gradle-wrapper.jar
