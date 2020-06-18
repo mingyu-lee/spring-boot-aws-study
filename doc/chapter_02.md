@@ -43,32 +43,26 @@ public class HelloControllerTest {
 
 ```
 1. @ExtendWith(SpringExtension.class)
-* Junit 5의 확장기능(Extenstion)을 등록하는 어노테이션
-* Spring Framework의 기능을 테스트에서 사용할 수 있도록 Junit과 연결한다.
-
+    * Junit 5의 확장기능(Extenstion)을 등록하는 어노테이션
+    * Spring Framework의 기능을 테스트에서 사용할 수 있도록 Junit과 연결한다.
 2. @WebMvcTest(controllers = HelloController.class)
-* Spring MVC 테스트에 집중할 수 있도록 지원해주는 어노테이션
-* Spring의 전체적인 자동 설정 대신 MVC를 위한 @Controller, @ControllerAdvice, @JsonComponent 등을 사용할 수 있다.
-* StereoType 어노테이션 (@Service, @Component, @Repository)은 사용할 수 없다.
-* HelloController 클래스를 등록하여 이 테스트 클래스에서는 HelloController만 사용하도록 설정
-
+    * Spring MVC 테스트에 집중할 수 있도록 지원해주는 어노테이션
+    * Spring의 전체적인 자동 설정 대신 MVC를 위한 @Controller, @ControllerAdvice, @JsonComponent 등을 사용할 수 있다.
+    * StereoType 어노테이션 (@Service, @Component, @Repository)은 사용할 수 없다.
+    * HelloController 클래스를 등록하여 이 테스트 클래스에서는 HelloController만 사용하도록 설정
 3. private MockMvc mvc
-* 스프링 MVC 테스트를 지원하는 목 객체
-* [API 문서](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html)
-
+    * 스프링 MVC 테스트를 지원하는 목 객체
+    * [API 문서](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/web/servlet/MockMvc.html)
 4. @Test
-* 이 메서드가 Test 메서드임을 알려주는 어노테이션
-* JUnit 5에서는 접근제어자가 public이 아니어도 동작한다.
-
+    * 이 메서드가 Test 메서드임을 알려주는 어노테이션
+    * JUnit 5에서는 접근제어자가 public이 아니어도 동작한다.
 5. mvc.perform(get("/hello"))
-* MockMvc를 통해 /hello 엔드포인트로 HTTP GET 요청을 한다.
-* 메서드 체이닝을 지원하여 간편하게 작성할 수 있다.
-
+    * MockMvc를 통해 /hello 엔드포인트로 HTTP GET 요청을 한다.
+    * 메서드 체이닝을 지원하여 간편하게 작성할 수 있다.
 6. .andExpect(status().isOk())
-* perform 메서드의 결과를 검증한다.
-* HTTP Header의 Status가 200인지 검증한다.
-
+    * perform 메서드의 결과를 검증한다.
+    * HTTP Header의 Status가 200인지 검증한다.
 7. .andExpect(content().string(hello))
-* 응답 본문의 내용을 검증한다.
-* HelloController에서 응답하는 "hello" 문자열인지 검증한다.
+    * 응답 본문의 내용을 검증한다.
+    * HelloController에서 응답하는 "hello" 문자열인지 검증한다.
 
