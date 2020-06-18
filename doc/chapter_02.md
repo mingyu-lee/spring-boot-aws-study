@@ -21,21 +21,21 @@
   * 구현체에 의존하지 않도록 작성한다.다
 
 ## Hello Controller 테스트 코드 작성하기
-```
-@ExtendWith(SpringExtension.class) \\ 1
-@WebMvcTest(controllers = HelloController.class) \\ 2
+```java
+@ExtendWith(SpringExtension.class) // 1
+@WebMvcTest(controllers = HelloController.class) // 2
 public class HelloControllerTest {
 
     @Autowired
-    private MockMvc mvc; \\ 3
+    private MockMvc mvc; // 3
 
-    @Test \\ 4
+    @Test // 4
     public void hello_return() throws Exception {
         String hello = "hello";
 
-        mvc.perform(get("/hello")) \\ 5
-                .andExpect(status().isOk()) \\ 6
-                .andExpect(content().string(hello)); \\ 7
+        mvc.perform(get("/hello")) // 5
+                .andExpect(status().isOk()) // 6
+                .andExpect(content().string(hello)); / / 7
 
     }
 
@@ -66,3 +66,48 @@ public class HelloControllerTest {
     * 응답 본문의 내용을 검증한다.
     * HelloController에서 응답하는 "hello" 문자열인지 검증한다.
 
+
+## 롬복을 사용한 ResponseDto 작성 및 테스트
+
+### HelloResponseDto
+```java
+package me.hoonmaro.study.springboot.web.dto;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter // 1
+@RequiredArgsConstructor // 2
+public class HelloResponseDto {
+
+    private final String name;
+    private final int amount;
+
+}
+```
+1. 롬복 Getter 메서드로 필드의 getter 메서드를 자동으로 생성한다.
+2. final 필드들의 생성자를 자동으로 생성한다.
+
+### 테스트 코드 
+```
+@Test
+void helloDto_return() throws Exception {
+    String name = "hello";
+    int amount = 1000;
+
+    mvc.perform(
+                get("/hello/dto")
+            .param("name", name) // 1
+            .param("amount", String.valueOf(amount)) // 2
+    )
+            .andDo(result -> System.out.println("result > " + result.getResponse().getContentAsString())) \\ 3
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.name", Matchers.is(name))) // 4
+            .andExpect(jsonPath("$.amount", Matchers.is(amount)));
+}
+```
+1. HTTP 쿼리 스트링 파라미터를 작성한다. 
+2. param의 두번째 인자인 파라미터 값은 문자열만 가능하다.
+3. andDo를 이용항 핸들러를 추가하여 추가적인 작업을 할 수 있으며, 여기서는 응답 결과를 System.out.println 으로 표시한다.
+4. jsonPath와 Matchers.is를 활용하여 json 응답 객체의 name 필드의 값을 검증한다.
+  * $는 Root Node를 의미한다. 오브젝트와 배열 타입 상관없다.
