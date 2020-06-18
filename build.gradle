@@ -2,10 +2,12 @@ buildscript {
     ext {
         springBootVersion = '2.3.1.RELEASE'
     }
+
     repositories {
         mavenCentral()
         jcenter()
     }
+
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
@@ -22,11 +24,15 @@ version '1.0'
 
 sourceCompatibility = 1.13
 
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     implementation('org.projectlombok:lombok')
-
 }
