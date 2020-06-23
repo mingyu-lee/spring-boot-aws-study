@@ -21,6 +21,15 @@ Spring Data JPA 인터페이스만 따르면 구현체와 저장소가 바뀌어
 예를 들어 Hibernate JPA 구현체 이외의 Eclipse Link 같은 구현체로 변경할 경우 구현체 설정만 바꾸면 나머지 코드는 건드릴 일이 없다.
 마찬가지로, MariaDB 저장소를 쓰다가 Oracle로 바꿔도 설정만 바꿔주면 된다.
 
-##
+## JPA 의존성 추가
+```groovy
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-jpa')
+    implementation('com.h2database:h2')
+}
+```
+* org.springframework.boot:spring-boot-starter-jpa: 스프링 JPA 인터페이스
+* com.h2database:h2: 인메모리 데이터베이스로 가볍고 빨라 로컬/테스트 용도로 자주 사용한다.
+ 
 
 
