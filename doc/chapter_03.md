@@ -40,6 +40,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@Getter
 @NoArgsConstructor // 1
 @Entity // 2
 public class Posts {
@@ -66,7 +67,7 @@ public class Posts {
 }
 ```
 * 클래스 어노테이션은 필수 어노테이션을 클래스에 가깝게 작성한다.
-  * @NoArgsConstructor 같은 롬복 어노테이션은 코틀린으로 언어를 변경할 경우에 필요 없는데 클래스 쪽에 쓰여져있으면 어노테이션 삭제가 번거롭다
+  * @Getter, @NoArgsConstructor 같은 롬복 어노테이션은 코틀린으로 언어를 변경할 경우에 필요 없는데 클래스 쪽에 쓰여져있으면 어노테이션 삭제가 번거롭다
 
 1. @NoArgsConstructor: 롬복 어노테이션으로 기본 생성자를 만들어준다.
 2. @Entity: JPA Entity 클래스임을 선언한다. 데이터베이스에 대한 영속성이 생기며 하나의 테이블이 생성된다.
