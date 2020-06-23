@@ -24,11 +24,11 @@ Spring Data JPA 인터페이스만 따르면 구현체와 저장소가 바뀌어
 ## JPA 의존성 추가
 ```groovy
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('com.h2database:h2')
 }
 ```
-* org.springframework.boot:spring-boot-starter-jpa: 스프링 JPA 인터페이스
+* org.springframework.boot:spring-boot-starter-data-jpa: Spring Data JPA 스타터 의존성
 * com.h2database:h2: 인메모리 데이터베이스로 가볍고 빨라 로컬/테스트 용도로 자주 사용한다.
  
 
