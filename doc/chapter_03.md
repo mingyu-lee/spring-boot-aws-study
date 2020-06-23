@@ -31,5 +31,51 @@ dependencies {
 * org.springframework.boot:spring-boot-starter-data-jpa: Spring Data JPA 스타터 의존성
 * com.h2database:h2: 인메모리 데이터베이스로 가볍고 빨라 로컬/테스트 용도로 자주 사용한다.
  
+## Entity 클래스
+```java
+package me.hoonmaro.study.springboot.domain.posts;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+@NoArgsConstructor // 1
+@Entity // 2
+public class Posts {
+
+    @Id // 3
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 4
+    private Long id;
+
+    @Column(length = 500, nullable = false) // 5
+    private String title;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
+
+    private String author;
+
+    @Builder // 6
+    public Posts(String title, String content, String author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
+
+}
+```
+* 클래스 어노테이션은 필수 어노테이션을 클래스에 가깝게 작성한다.
+  * @NoArgsConstructor 같은 롬복 어노테이션은 코틀린으로 언어를 변경할 경우에 필요 없는데 클래스 쪽에 쓰여져있으면 어노테이션 삭제가 번거롭다
+
+1. @NoArgsConstructor: 롬복 어노테이션으로 기본 생성자를 만들어준다.
+2. @Entity: JPA Entity 클래스임을 선언한다. 데이터베이스에 대한 영속성이 생기며 하나의 테이블이 생성된다.
+3. @Id: Entity 클래스의 식별자임을 선언한다. 테이블의 PK 필드임을 나타낸다.
+4. @GeneratedValue: 식별자를 생성하는 방법을 선언한다. 스프링 부트 2부터는 IDENTITY를 사용하여 AUTO_INCREMENT 방식으로 생성한다.
+  * 비즈니스상 자연키가 PK가 될 경우 여러 문제가 발생할 여지가 있어 PK는 SEQUENCE와 같은 인조키를 사용하는 것이 좋다.
+  * 이러한 자연키들은 따로 컬럼으로 빼고 유니크키로 선언하여 중복을 방지하는 것이 좋다.
+5. @Column: 테이블의 컬럼을 나타낸다. 기본적으로느 Entity 클래스의 필드는 모두 컬럼으로 만들어진다.
+  * 컬럼의 기본값 이외의 변경이 필요한 옵션이 있을 경우 해당 어노테이션과 속성을 설정한다.
+6. @Builder: 빌더 패턴을 위한 빌더 클래스/메서드를 자동으로 생성해준다.
+  * 일반적으로는 빌더 클래스에 포함할 필드를 인자로 가진 생성자 위에 선언하며, 보통 모든 필드에 대한 생성자에 사용한다.
+ 
