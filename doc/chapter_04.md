@@ -32,4 +32,12 @@
 * Mustache.js와 Mustache.java 가 있어 하나의 문법으로 클라이언트/서버 모두 사용 가능하다.
 * IntelliJ 커뮤니티(무료) 버전에서도 플러그인이 지원된다.
 
+### 의존성 추가
+```groovy
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
+}
+```
+* 스프링 부트에서 공식 지원하는 템플릿 엔진
+* 기본적으로 /src/main/resources/templates 디렉토리에 위치하면 스프링 부트가 자동으로 로딩한다.
 
