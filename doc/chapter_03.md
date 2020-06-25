@@ -121,3 +121,49 @@ public class Posts {
   * (하나의 트랜잭션에 묶인 여러 연산들 중 하나가 변경될 경우 다른 연산들에 모두 영향을 미칠 수 있음)
 * 서비스 레이어는 실제 비즈니스 로직을 각 역할/책임을 가진 도메인의 메서드를 호출하며, 트랜잭션과 도메인간의 순서만 보장
 * 도메인 객체들을 호출하는 클라이언트라고 보면 될 듯
+
+
+## JPA Auditing 사용하기
+* 일반적으로 DB에 데이터를 생성할 때 생성시간과, 수정할 때 수정시간을 같이 기록한다.
+* 회원 DB가 있을 경우 생성자와, 변경자까지도 생성과 수정시 기록을 하는 것이 일반적이다.
+* 이 때 Entity 클래스들마다 createDate, updateDate 등과 같은 필드값을 매번 선언해주고, 각 비즈니스 로직에서도 각 값들을 세팅해주는 것은 번거롭다.
+* Auditing은 이러한 일련의 과정들을 자동으로 도와주는 기능이다.
+
+```java
+package me.hoonmaro.study.springboot.domain;
+
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+
+@Getter
+@MappedSuperclass // 1
+@EntityListeners(AuditingEntityListener.class) // 2
+public abstract class BaseTimeEntity {
+
+    @CreatedDate // 3
+    private LocalDateTime createDate;
+
+    @LastModifiedDate // 4
+    private LocalDateTime modifiedDate;
+    
+}
+```
+1. @MappedSuperClass
+  * JPA 엔티티 클래스들이 BaseTimeEntity를 상속할 경우 필드들(createDate, modifiedDate)도 컬럼으로 인식하도록 한다.
+
+2. @EntityListeners(AuditingEntityListener.class)
+  * BaseTimeEntity 클래스에 Auditing 기능을 포함 시킨다.
+  
+3. @CreatedDate
+  * Entity가 생성되어 저장될 때 시간이 자동 저장 된다.
+  
+4. @LastModifiedDate
+  * 조회한 Entity의 값을 변경할 때 시간이 자동 저장 된다.
+ 
+  
