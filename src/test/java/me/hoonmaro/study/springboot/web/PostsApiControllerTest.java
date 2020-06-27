@@ -106,4 +106,30 @@ public class PostsApiControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
     }
 
+    @DisplayName("Posts 객체 삭제")
+    @Test
+    void posts_delete() {
+        // given
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                .title("제목")
+                .content("내용")
+                .author("훈마로")
+                .build());
+
+        Long deleteId = savedPosts.getId();
+
+        String url = UriComponentsBuilder.fromHttpUrl("http://localhost").port(port)
+                .path("/api/v1/posts/").path(String.valueOf(deleteId)).build().toUriString();
+
+        // when
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, HttpEntity.EMPTY, Long.class);
+
+        // then
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isEqualTo(deleteId);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all.isEmpty()).isTrue();
+    }
+
 }
