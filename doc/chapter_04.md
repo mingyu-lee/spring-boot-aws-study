@@ -41,3 +41,28 @@ dependencies {
 * 스프링 부트에서 공식 지원하는 템플릿 엔진
 * 기본적으로 /src/main/resources/templates 디렉토리에 위치하면 스프링 부트가 자동으로 로딩한다.
 
+## Querydsl
+* 규모가 큰 DB구조에서 FK 조인, 복잡한 조건문 등의 쿼리는 JPA Entity 만으로는 표현하기 복잡하다.
+* 이를 처리하기 위해 조회용 프레임워크를 같이 사용한다.
+* MyBatis, jOOQ, Querydsl 등이 있다.
+* 그 중 Querydsl을 자주 사용하는데 이유는 다음과 같다.
+
+### Querydsl 사용 이유
+1. 타입 안정성이 보장된다.
+  * 메서드를 기반으로 쿼리를 사용하므로 오타나 없는 컬럼명 등이 IDE에서 자동으로 검출 된다.
+  * jOOQ도 가지는 장점이지만, MyBatis는 지원하지 않는다.
+  * 실제로 MyBatis에서 아주 사소한 오타 등의 잘못된 쿼리로 오류가 발생하고, 이를 찾는데 시간이 걸리는 경우가 있다.
+
+2. 국내 많은 회사에서 사용 한다.
+  * 쿠팡, 우아한형제들 등 JPA를 적극적으로 사용하는 회사에선 Querydsl도 같이 적극적으로 사용한다.
+  
+3. 레퍼런스가 많다.
+  * 많이 사용되는 프레임워크인 만큼 자료가 많고, 커뮤니티에 질문을 올리면 답을 얻기 쉽다.
+
+
+## @Transactional(readOnly = true)
+* 트랜잭션 범위는 유지하되 조회 기능만 남겨두어 조회 속도가 개선되므로 등록, 수정, 삭제 기능이 없는 서비스 메소드에서 사용
+* JPA 구현체에 Hint를 제공하여 속도를 개선할 수 있고, 큰 객체 트리의 경우 눈에 띄게 증가한다고 한다.
+* 몇몇 Database는 INSERT, UPDATE 문을 거부 할 수 있다.
+* [참고 문서](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#transactions)
+
