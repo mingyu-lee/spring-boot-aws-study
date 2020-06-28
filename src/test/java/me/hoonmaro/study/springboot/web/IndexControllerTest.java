@@ -19,7 +19,7 @@ public class IndexControllerTest {
 
     @DisplayName("메인페이지 로딩")
     @Test
-    void index_page() {
+    public void index_page() {
         String body = this.testRestTemplate.getForObject("/", String.class);
 
         assertThat(body).contains("<h1>스프링 부트 AWS 공부</h1>");
