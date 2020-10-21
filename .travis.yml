@@ -19,3 +19,20 @@ notifications:
   email:
     recipients:
       - leemingyu05@gmail.com
+
+# deploy 단계 전 명령으로 AWS CodeDeploy는 JAR를 인식 못하므로 jar + 설정 파일을 zip으로 압
+before_deploy:
+  - zip -r spring-boot-aws-study *
+  - mkdir -p deploy
+  - mv spring-boot-aws-study.zip deploy/spring-boot-aws-study.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-aws-study-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
+    wait-until-deployed: true
