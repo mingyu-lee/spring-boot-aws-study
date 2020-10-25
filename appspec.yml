@@ -17,7 +17,7 @@ permissions:
   - object: /
     pattern: "**"
     owner: ec2-user
-    group: ec2-uswer
+    group: ec2-user
 
 # CodeDeploy 배포 단계에서 실행할 명령어 지정
 # ApplicationStart라는 단계에서 deploy.sh를 ec2-user 권한으로 실행
