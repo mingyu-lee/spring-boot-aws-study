@@ -64,18 +64,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ```
 1. @EnableWebSecurity: 스프링 시큐리티를 활성화 합니다.
 2. static 리소스들은 WebSecurity ignoring 설정을 통해 시큐리티를 바로 통과시키도록 한다.
-  * 책에서는 HttpSecurity의 permitAll()로 설정했었는데, 문서를 찾아보니 WebSecurity가 더 적절한 것 같다.
-  * 두 가지 방식의 결과는 같으나 과정에 있어 HttpSecurity는 더 많은 SpringSecurityFilterChain을 거쳐야 하므로 더 느리다.
-  * [참고1. Spring Security Java Config Preview: Web Security
+    * 책에서는 HttpSecurity의 permitAll()로 설정했었는데, 문서를 찾아보니 WebSecurity가 더 적절한 것 같다.
+    * 두 가지 방식의 결과는 같으나 과정에 있어 HttpSecurity는 더 많은 SpringSecurityFilterChain을 거쳐야 하므로 더 느리다.
+    * [참고1. Spring Security Java Config Preview: Web Security
 ](https://spring.io/blog/2013/07/03/spring-security-java-config-preview-web-security/)
-  * [참고2. SO: Difference between Web ignoring and Http permitting in Spring Security?](https://stackoverflow.com/questions/55652267/difference-between-web-ignoring-and-http-permitting-in-spring-security)
+    * [참고2. SO: Difference between Web ignoring and Http permitting in Spring Security?](https://stackoverflow.com/questions/55652267/difference-between-web-ignoring-and-http-permitting-in-spring-security)
 3. csrf().disable().headers().frameOptions().disable()
-  * h2-console에 접근할 수 있게 csrf와 frameOptions를 비활성화.
+    * h2-console에 접근할 수 있게 csrf와 frameOptions를 비활성화.
 4. oauth2Login(): OAuth2 로그인 기능에 대한 설정 진입점
 5. userInfoEndpoint(): OAuth2 로그인 성공 이후 사용자 정보를 가져올 때의 설정들을 담당
 6. userService()
-  * 소셜 로그인 성공 시 후속 조치를 진행할 UserService 인터페이스의 구현체를 등록한다.
-  * 리소스 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능을 명시할 수 있다.
+    * 소셜 로그인 성공 시 후속 조치를 진행할 UserService 인터페이스의 구현체를 등록한다.
+    * 리소스 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능을 명시할 수 있다.
   
 ### SessionUser
 * 세션에 저장할 때 직렬화를 해야한다. 그래야 세션에 저장된 객체를 불러와 역직렬화 할 수 있다.
