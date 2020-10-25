@@ -38,9 +38,7 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello)); // 7
 
     }
-
 }
-
 ```
 1. @ExtendWith(SpringExtension.class)
     * Junit 5의 확장기능(Extenstion)을 등록하는 어노테이션
