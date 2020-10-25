@@ -14,7 +14,7 @@ cache:
 
 script: "./gradlew clean build"
 
-# deploy 단계 전 명령으로 AWS CodeDeploy는 JAR를 인식 못하므로 jar + 설정 파일을 zip으로 압
+# deploy 단계 전 명령으로 AWS CodeDeploy는 JAR를 인식 못하므로 jar + 설정 파일을 zip으로 압축
 before_deploy:
   - zip -r spring-boot-aws-study *
   - mkdir -p deploy
