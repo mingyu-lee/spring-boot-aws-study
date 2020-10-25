@@ -23,6 +23,11 @@ permissions:
 # ApplicationStart라는 단계에서 start.sh를 ec2-user 권한으로 실행
 # timeout: 60으로 스크립트 실행 60초 이상 수행되면 실패가 된다.
 hooks:
+  AfterInstall:
+    # 엔진엑스와 연결되어 있지 않은 스프링 부트를 종료
+    - location: stop.sh
+      timeout: 60
+      runas: ec2-user
   ApplicationStart:
     - # 엔진엑스와 연결되어 있지 않은 Port로 새 버전의 스프링 부트를 시작
     - location: start.sh
