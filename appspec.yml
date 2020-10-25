@@ -12,3 +12,18 @@ files:
     destination: /home/ec2-user/app/step2/zip
     ## 기존에 파일들이 있으면 덮어쓸지 결정한다.
     overwrite: yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-uswer
+
+# CodeDeploy 배포 단계에서 실행할 명령어 지정
+# ApplicationStart라는 단계에서 deploy.sh를 ec2-user 권한으로 실행
+# timeout: 60으로 스크립트 실행 60초 이상 수행되면 실패가 된다.
+hooks:
+  ApplicationStart:
+    - location: deploy.sh
+      timeout: 60
+      runas: ec2-user
