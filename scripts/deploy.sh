@@ -34,7 +34,8 @@ echo "> $JAR_NAME 실행"
 nohup java -jar \
         -Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties,/home/ec-2user/app/application-real-db.properties \
         -Dspring.profiles.active=real \
-        $JAR_NAME > $REPOSITORY/$JAR_NAME 2>&1 &
+        $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
-## $JAR_NAME > $REPOSITORY/$JAR_NAME 2>&1 & 중요하다
+## $JAR_NAME > $REPOSITORY/nohupt.out 2>&1 & 중요하다
 ## nohup 실행시 CodeDeploy가 무한 대기 하므로 CodeDeploy 로그에 표준 입출력이 출력되도록 설정한다.
+## nohup.out 파일을 표준 입출력용으로 사용한다.
