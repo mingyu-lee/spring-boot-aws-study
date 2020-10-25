@@ -14,12 +14,6 @@ cache:
 
 script: "./gradlew clean build"
 
-# CI 실행 완료시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - leemingyu05@gmail.com
-
 # deploy 단계 전 명령으로 AWS CodeDeploy는 JAR를 인식 못하므로 jar + 설정 파일을 zip으로 압
 before_deploy:
   - zip -r spring-boot-aws-study *
@@ -28,11 +22,31 @@ before_deploy:
 
 deploy:
   - provider: s3
+    ## travis environment variables(환경변수)에 설정한 S3 AWS_ACCESS_KEY, AWS_SECRET_KEY
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: spring-aws-study-build
     region: ap-northeast-2
     skip_cleanup: true
     acl: private
-    local_dir: deploy # before_deploy에서 생성한 디렉토리
+    ## before_deploy에서 생성한 디렉토리
+    local_dir: deploy
     wait-until-deployed: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-aws-study-build
+    key: spring-boot-aws-study.zip
+    bundle_type: zip
+    ## CodeDeploy 등록시 설정한 애플리케이션 이름
+    application: springboot-aws-study-webservice
+    ## CodeDeploy에서 생성한 배포 그룹 이름
+    deployment_group: springboot-aws-study-webserivce-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+
+# CI 실행 완료시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - leemingyu05@gmail.com
